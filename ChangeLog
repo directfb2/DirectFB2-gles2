@@ -1,3 +1,24 @@
+commit eb7049dba355c9a4abd46158da6f5d1b1bbbc0d0
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Fri Nov 11 14:53:56 2022 +0100
+
+    fragment shaders: Add precision mediump float
+
+commit db73f1ccb7b8355285b70805e7915a7f9288445b
+Merge: 6b6cd66 87d85d3
+Author: DirectFB2 <80045286+directfb2@users.noreply.github.com>
+Date:   Wed Nov 9 17:24:56 2022 +0100
+
+    Merge pull request #1 from caramelli/master
+    
+    OpenGL ES 2.0 GFX driver
+
+commit 87d85d3d8e161968babbdffa8234b0b7eb364242
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Wed Nov 9 17:23:05 2022 +0100
+
+    Add ChangeLog
+
 commit e0146eedae1e027624d3b256d7e93e5179ab80ae
 Author: Nicolas Caramelli <caramelli.devel@gmail.com>
 Date:   Wed Nov 9 17:22:48 2022 +0100
