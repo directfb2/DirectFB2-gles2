@@ -43,6 +43,8 @@ void main(void)                                                          \
 
 /* Draw fragment in a constant color. */
 static const char *draw_frag_src = "                                     \
+precision mediump float;                                                 \
+                                                                         \
 uniform vec4 dfbColor;                                                   \
                                                                          \
 void main(void)                                                          \
@@ -87,6 +89,8 @@ void main(void)                                                          \
 
 /* Sample texture. */
 static const char *blit_frag_src = "                                     \
+precision mediump float;                                                 \
+                                                                         \
 uniform sampler2D dfbSampler;                                            \
 varying vec2      varTexCoord;                                           \
                                                                          \
@@ -97,6 +101,8 @@ void main(void)                                                          \
 
 /* Sample texture and modulate by static color. */
 static const char *blit_color_frag_src = "                               \
+precision mediump float;                                                 \
+                                                                         \
 uniform sampler2D dfbSampler;                                            \
 uniform vec4      dfbColor;                                              \
 varying vec2      varTexCoord;                                           \
@@ -108,6 +114,8 @@ void main(void)                                                          \
 
 /* Apply source color keying. */
 static const char *blit_colorkey_frag_src = "                            \
+precision mediump float;                                                 \
+                                                                         \
 uniform sampler2D dfbSampler;                                            \
 uniform vec4      dfbColor;                                              \
 uniform ivec3     dfbColorkey;                                           \
@@ -126,6 +134,8 @@ void main(void)                                                          \
 
 /* Perform an alpha pre-multiply of source frag color with source frag alpha after sampling and modulation. */
 static const char *blit_premultiply_frag_src = "                         \
+precision mediump float;                                                 \
+                                                                         \
 uniform sampler2D dfbSampler;                                            \
 uniform vec4      dfbColor;                                              \
 varying vec2      varTexCoord;                                           \

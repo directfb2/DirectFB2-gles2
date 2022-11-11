@@ -21,7 +21,7 @@ directfb_dep = dependency('directfb-internal')
 
 moduledir = directfb_dep.get_pkgconfig_variable('moduledir')
 
-glesv2_dep = dependency('glesv2')
+gles2_dep = dependency('glesv2')
 
 gles2_sources = [
   'gles2_2d.c',
@@ -30,6 +30,6 @@ gles2_sources = [
 
 library('directfb_gles2',
         gles2_sources,
-        dependencies: [directfb_dep, glesv2_dep],
+        dependencies: [directfb_dep, gles2_dep],
         install: true,
         install_dir: join_paths(moduledir, 'gfxdrivers'))
