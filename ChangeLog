@@ -1,3 +1,24 @@
+commit 6ac7bf903d9620f766b6af30892ec83974e23c5c
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Fri Jan 6 22:11:20 2023 +0100
+
+    Add hardware acceleration support for 90 and 270 degree rotations
+
+commit fe03aa2d387ef62fc91197a2cdb4aeff57f1fc4f
+Merge: db73f1c 3ca2634
+Author: DirectFB2 <80045286+directfb2@users.noreply.github.com>
+Date:   Fri Nov 11 14:54:44 2022 +0100
+
+    Merge pull request #2 from caramelli/master
+    
+    fragment shaders: Add precision mediump float
+
+commit 3ca2634c19a5f08a614547576ce3f9d5299ef542
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Fri Nov 11 14:54:07 2022 +0100
+
+    Update ChangeLog
+
 commit eb7049dba355c9a4abd46158da6f5d1b1bbbc0d0
 Author: Nicolas Caramelli <caramelli.devel@gmail.com>
 Date:   Fri Nov 11 14:53:56 2022 +0100
