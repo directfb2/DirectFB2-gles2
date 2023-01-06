@@ -144,16 +144,16 @@ driver_probe()
 }
 
 static void
-driver_get_info( GraphicsDriverInfo *info )
+driver_get_info( GraphicsDriverInfo *driver_info )
 {
-     info->version.major = 0;
-     info->version.minor = 1;
+     driver_info->version.major = 0;
+     driver_info->version.minor = 1;
 
-     snprintf( info->name,   DFB_GRAPHICS_DRIVER_INFO_NAME_LENGTH,   "GLES2" );
-     snprintf( info->vendor, DFB_GRAPHICS_DRIVER_INFO_VENDOR_LENGTH, "DirectFB" );
+     snprintf( driver_info->name,   DFB_GRAPHICS_DRIVER_INFO_NAME_LENGTH,   "GLES2" );
+     snprintf( driver_info->vendor, DFB_GRAPHICS_DRIVER_INFO_VENDOR_LENGTH, "DirectFB" );
 
-     info->driver_data_size = sizeof(GLES2DriverData);
-     info->device_data_size = sizeof(GLES2DeviceData);
+     driver_info->driver_data_size = sizeof(GLES2DriverData);
+     driver_info->device_data_size = sizeof(GLES2DeviceData);
 }
 
 static DFBResult
@@ -185,13 +185,13 @@ driver_init_device( GraphicsDeviceInfo *device_info,
 
      /* Fill device information. */
      snprintf( device_info->name,   DFB_GRAPHICS_DEVICE_INFO_NAME_LENGTH,   "%s", glGetString( GL_RENDERER ) );
-     snprintf( device_info->vendor, DFB_GRAPHICS_DEVICE_INFO_VENDOR_LENGTH, "Raspberry Pi" );
+     snprintf( device_info->vendor, DFB_GRAPHICS_DEVICE_INFO_VENDOR_LENGTH, "OpenGL ES" );
      device_info->caps.flags    = CCF_CLIPPING | CCF_RENDEROPTS;
      device_info->caps.accel    = DFXL_FILLRECTANGLE | DFXL_DRAWRECTANGLE | DFXL_DRAWLINE | DFXL_FILLTRIANGLE |
                                   DFXL_BLIT          | DFXL_STRETCHBLIT;
      device_info->caps.blitting = DSBLIT_BLEND_ALPHACHANNEL | DSBLIT_BLEND_COLORALPHA | DSBLIT_COLORIZE         |
                                   DSBLIT_SRC_COLORKEY       | DSBLIT_SRC_PREMULTIPLY  | DSBLIT_SRC_PREMULTCOLOR |
-                                  DSBLIT_ROTATE180;
+                                  DSBLIT_ROTATE180          | DSBLIT_ROTATE90         | DSBLIT_ROTATE270;
      device_info->caps.drawing  = DSDRAW_BLEND | DSDRAW_SRC_PREMULTIPLY;
 
      /* Initialize program information. */

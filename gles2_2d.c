@@ -770,6 +770,18 @@ gles2Blit( void         *driver_data,
           tex[4] = tx1; tex[5] = ty1;
           tex[6] = tx2; tex[7] = ty1;
      }
+     else if (drv->blittingflags & DSBLIT_ROTATE90) {
+          tex[0] = tx2; tex[1] = ty1;
+          tex[2] = tx2; tex[3] = ty2;
+          tex[4] = tx1; tex[5] = ty2;
+          tex[6] = tx1; tex[7] = ty1;
+     }
+     else if (drv->blittingflags & DSBLIT_ROTATE270) {
+          tex[0] = tx1; tex[1] = ty2;
+          tex[2] = tx1; tex[3] = ty1;
+          tex[4] = tx2; tex[5] = ty1;
+          tex[6] = tx2; tex[7] = ty2;
+     }
      else {
           tex[0] = tx1; tex[1] = ty1;
           tex[2] = tx2; tex[3] = ty1;
@@ -816,6 +828,18 @@ gles2StretchBlit( void         *driver_data,
           tex[2] = tx1; tex[3] = ty2;
           tex[4] = tx1; tex[5] = ty1;
           tex[6] = tx2; tex[7] = ty1;
+     }
+     else if (drv->blittingflags & DSBLIT_ROTATE90) {
+          tex[0] = tx2; tex[1] = ty1;
+          tex[2] = tx2; tex[3] = ty2;
+          tex[4] = tx1; tex[5] = ty2;
+          tex[6] = tx1; tex[7] = ty1;
+     }
+     else if (drv->blittingflags & DSBLIT_ROTATE270) {
+          tex[0] = tx1; tex[1] = ty2;
+          tex[2] = tx1; tex[3] = ty1;
+          tex[4] = tx2; tex[5] = ty1;
+          tex[6] = tx2; tex[7] = ty2;
      }
      else {
           tex[0] = tx1; tex[1] = ty1;
@@ -877,6 +901,24 @@ gles2BatchBlit( void               *driver_data,
                tex[i*12+6]  = tx1; tex[i*12+7]  = ty1;
                tex[i*12+8]  = tx2; tex[i*12+9]  = ty2;
                tex[i*12+10] = tx2; tex[i*12+11] = ty1;
+          }
+          else if (drv->blittingflags & DSBLIT_ROTATE90) {
+               tex[i*12+0]  = tx2; tex[i*12+1]  = ty1;
+               tex[i*12+2]  = tx2; tex[i*12+3]  = ty2;
+               tex[i*12+4]  = tx1; tex[i*12+5]  = ty2;
+
+               tex[i*12+6]  = tx1; tex[i*12+7]  = ty2;
+               tex[i*12+8]  = tx2; tex[i*12+9]  = ty1;
+               tex[i*12+10] = tx1; tex[i*12+11] = ty1;
+          }
+          else if (drv->blittingflags & DSBLIT_ROTATE270) {
+               tex[i*12+0]  = tx1; tex[i*12+1]  = ty2;
+               tex[i*12+2]  = tx1; tex[i*12+3]  = ty1;
+               tex[i*12+4]  = tx2; tex[i*12+5]  = ty1;
+
+               tex[i*12+6]  = tx2; tex[i*12+7]  = ty1;
+               tex[i*12+8]  = tx1; tex[i*12+9]  = ty2;
+               tex[i*12+10] = tx2; tex[i*12+11] = ty2;
           }
           else {
                tex[i*12+0]  = tx1; tex[i*12+1]  = ty1;
