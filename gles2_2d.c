@@ -16,6 +16,8 @@
    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
+#include <core/screen.h>
+#include <core/screens.h>
 #include <core/state.h>
 #include <core/surface_allocation.h>
 
@@ -59,35 +61,69 @@ gles2_validate_DESTINATION( GLES2DriverData *drv,
      GLint             w    = state->destination->config.size.w;
      GLint             h    = state->destination->config.size.h;
      GLES2ProgramInfo *prog = &dev->progs[dev->prog_index];
+     GLfloat           m[9];
+     int               width, height;
 
      D_DEBUG_AT( GLES2_2D, "%s()\n", __FUNCTION__ );
      D_DEBUG_AT( GLES2_2D, "  -> width %d, height %d\n", w, h );
 
      glViewport( 0, 0, w, h );
 
-     if (state->render_options & DSRO_MATRIX) {
-          GLfloat m[9];
+     memset( m, 0, sizeof(m) );
+     m[8] = 1.0f;
 
-          m[0] = 2.0f / w; m[3] =  0.0;      m[6] = -1.0f;
-          m[1] = 0.0;      m[4] = -2.0f / h; m[7] =  1.0f;
-          m[2] = 0.0;      m[5] =  0.0;      m[8] =  1.0f;
+     if (!drv->aspect) {
+          /* Get the layer rotation. */
+          if (dfb_config->layers[dfb_config->primary_layer].rotate_set)
+               drv->rotation = dfb_config->layers[dfb_config->primary_layer].rotate;
+          else
+               dfb_screen_get_rotation( dfb_screen_at_translated( DSCID_PRIMARY ), &drv->rotation );
+
+          if (drv->rotation == 90) {
+               dfb_screen_get_screen_size( dfb_screen_at_translated( DSCID_PRIMARY ), &width, &height );
+               drv->aspect = height <= width ? (float) height / width : (float) width / height;
+          }
+          else
+               drv->aspect = 1.0f;
+     }
+
+     if (state->render_options & DSRO_MATRIX) {
+          m[0] = 2.0f / w; m[4] = -2.0f / h; m[6] = -1.0f; m[7] = 1.0f;
 
           glUniformMatrix3fv( prog->dfbMVPMatrix, 1, GL_FALSE, m );
-
-          D_DEBUG_AT( GLES2_2D, "  -> loaded model-view-projection matrix %f %f %f %f %f %f %f %f %f\n",
-                      m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8] );
      }
      else {
           GLint fbo;
 
           glGetIntegerv( GL_FRAMEBUFFER_BINDING, &fbo );
 
-          if (fbo)
+          if (fbo) {
                glUniform3f( prog->dfbScale, 2.0f / w,  2.0f / h, -1.0f );
-          else
-               glUniform3f( prog->dfbScale, 2.0f / w, -2.0f / h,  1.0f );
 
-          D_DEBUG_AT( GLES2_2D, "  -> loaded scale factors %f %f\n", 2.0f / w, 2.0f / h );
+               m[0] = 1.0f; m[4] = 1.0f;
+
+               glUniformMatrix3fv( prog->dfbRotMatrix, 1, GL_FALSE, m );
+          }
+          else {
+               if (drv->rotation == 90)
+                    glUniform3f( prog->dfbScale, drv->aspect * 2.0f / h, drv->aspect * -2.0f / w,  1.0f );
+               else
+                    glUniform3f( prog->dfbScale, 2.0f / w, -2.0f / h,  1.0f );
+
+               switch (drv->rotation) {
+                    case 180:
+                         m[0] = -1.0f; m[4] = -1.0f;
+                         break;
+                    case 90:
+                         m[1] = 1.0f; m[3] = -1.0f;
+                         break;
+                    default:
+                         m[0] = 1.0f; m[4] = 1.0f;
+                         break;
+               }
+
+               glUniformMatrix3fv( prog->dfbRotMatrix, 1, GL_FALSE, m );
+          }
      }
 
      /* Set the flag. */
