@@ -180,7 +180,6 @@ driver_init_device( GraphicsDeviceInfo *device_info,
      GLuint           prog_obj;
      int              i;
 
-
      D_DEBUG_AT( GLES2_Driver, "%s()\n", __FUNCTION__ );
 
      /* Fill device information. */
@@ -198,6 +197,7 @@ driver_init_device( GraphicsDeviceInfo *device_info,
      for (i = 0; i < NUM_PROGRAMS; i++) {
           dev->progs[i].obj          =  0;
           dev->progs[i].dfbScale     = -1;
+          dev->progs[i].dfbRotMatrix = -1;
           dev->progs[i].dfbROMatrix  = -1;
           dev->progs[i].dfbMVPMatrix = -1;
           dev->progs[i].dfbColor     = -1;
@@ -218,10 +218,11 @@ driver_init_device( GraphicsDeviceInfo *device_info,
           goto fail;
      }
 
-     dev->progs[DRAW].obj      = prog_obj;
-     dev->progs[DRAW].name     = "draw";
-     dev->progs[DRAW].dfbColor = glGetUniformLocation( dev->progs[DRAW].obj, "dfbColor" );
-     dev->progs[DRAW].dfbScale = glGetUniformLocation( dev->progs[DRAW].obj, "dfbScale" );
+     dev->progs[DRAW].obj          = prog_obj;
+     dev->progs[DRAW].name         = "draw";
+     dev->progs[DRAW].dfbColor     = glGetUniformLocation( dev->progs[DRAW].obj, "dfbColor" );
+     dev->progs[DRAW].dfbScale     = glGetUniformLocation( dev->progs[DRAW].obj, "dfbScale" );
+     dev->progs[DRAW].dfbRotMatrix = glGetUniformLocation( dev->progs[DRAW].obj, "dfbRotMatrix" );
 
      prog_obj = init_program( draw_mat_vert_src, draw_frag_src, DFB_FALSE );
      if (!prog_obj) {
@@ -246,10 +247,11 @@ driver_init_device( GraphicsDeviceInfo *device_info,
           goto fail;
      }
 
-     dev->progs[BLIT].obj         = prog_obj;
-     dev->progs[BLIT].name        = "blit";
-     dev->progs[BLIT].dfbScale    = glGetUniformLocation( dev->progs[BLIT].obj, "dfbScale" );
-     dev->progs[BLIT].dfbTexScale = glGetUniformLocation( dev->progs[BLIT].obj, "dfbTexScale" );
+     dev->progs[BLIT].obj          = prog_obj;
+     dev->progs[BLIT].name         = "blit";
+     dev->progs[BLIT].dfbScale     = glGetUniformLocation( dev->progs[BLIT].obj, "dfbScale" );
+     dev->progs[BLIT].dfbRotMatrix = glGetUniformLocation( dev->progs[BLIT].obj, "dfbRotMatrix" );
+     dev->progs[BLIT].dfbTexScale  = glGetUniformLocation( dev->progs[BLIT].obj, "dfbTexScale" );
 
      prog_obj = init_program( blit_mat_vert_src, blit_frag_src, DFB_TRUE );
      if (!prog_obj) {
@@ -275,11 +277,12 @@ driver_init_device( GraphicsDeviceInfo *device_info,
           goto fail;
      }
 
-     dev->progs[BLIT_COLOR].obj         = prog_obj;
-     dev->progs[BLIT_COLOR].name        = "blit_color";
-     dev->progs[BLIT_COLOR].dfbColor    = glGetUniformLocation( dev->progs[BLIT_COLOR].obj, "dfbColor" );
-     dev->progs[BLIT_COLOR].dfbScale    = glGetUniformLocation( dev->progs[BLIT_COLOR].obj, "dfbScale" );
-     dev->progs[BLIT_COLOR].dfbTexScale = glGetUniformLocation( dev->progs[BLIT_COLOR].obj, "dfbTexScale" );
+     dev->progs[BLIT_COLOR].obj          = prog_obj;
+     dev->progs[BLIT_COLOR].name         = "blit_color";
+     dev->progs[BLIT_COLOR].dfbColor     = glGetUniformLocation( dev->progs[BLIT_COLOR].obj, "dfbColor" );
+     dev->progs[BLIT_COLOR].dfbScale     = glGetUniformLocation( dev->progs[BLIT_COLOR].obj, "dfbScale" );
+     dev->progs[BLIT_COLOR].dfbRotMatrix = glGetUniformLocation( dev->progs[BLIT_COLOR].obj, "dfbRotMatrix" );
+     dev->progs[BLIT_COLOR].dfbTexScale  = glGetUniformLocation( dev->progs[BLIT_COLOR].obj, "dfbTexScale" );
 
      prog_obj = init_program( blit_mat_vert_src, blit_color_frag_src, DFB_TRUE );
      if (!prog_obj) {
@@ -305,12 +308,13 @@ driver_init_device( GraphicsDeviceInfo *device_info,
           goto fail;
      }
 
-     dev->progs[BLIT_COLORKEY].obj         = prog_obj;
-     dev->progs[BLIT_COLORKEY].name        = "blit_colorkey";
-     dev->progs[BLIT_COLORKEY].dfbColor    = glGetUniformLocation( dev->progs[BLIT_COLORKEY].obj, "dfbColor" );
-     dev->progs[BLIT_COLORKEY].dfbScale    = glGetUniformLocation( dev->progs[BLIT_COLORKEY].obj, "dfbScale" );
-     dev->progs[BLIT_COLORKEY].dfbTexScale = glGetUniformLocation( dev->progs[BLIT_COLORKEY].obj, "dfbTexScale" );
-     dev->progs[BLIT_COLORKEY].dfbColorkey = glGetUniformLocation( dev->progs[BLIT_COLORKEY].obj, "dfbColorkey" );
+     dev->progs[BLIT_COLORKEY].obj          = prog_obj;
+     dev->progs[BLIT_COLORKEY].name         = "blit_colorkey";
+     dev->progs[BLIT_COLORKEY].dfbColor     = glGetUniformLocation( dev->progs[BLIT_COLORKEY].obj, "dfbColor" );
+     dev->progs[BLIT_COLORKEY].dfbScale     = glGetUniformLocation( dev->progs[BLIT_COLORKEY].obj, "dfbScale" );
+     dev->progs[BLIT_COLORKEY].dfbRotMatrix = glGetUniformLocation( dev->progs[BLIT_COLORKEY].obj, "dfbRotMatrix" );
+     dev->progs[BLIT_COLORKEY].dfbTexScale  = glGetUniformLocation( dev->progs[BLIT_COLORKEY].obj, "dfbTexScale" );
+     dev->progs[BLIT_COLORKEY].dfbColorkey  = glGetUniformLocation( dev->progs[BLIT_COLORKEY].obj, "dfbColorkey" );
 
      prog_obj = init_program( blit_mat_vert_src, blit_colorkey_frag_src, DFB_TRUE );
      if (!prog_obj) {
@@ -338,11 +342,12 @@ driver_init_device( GraphicsDeviceInfo *device_info,
           goto fail;
      }
 
-     dev->progs[BLIT_PREMULTIPLY].obj         = prog_obj;
-     dev->progs[BLIT_PREMULTIPLY].name        = "blit_premultiply";
-     dev->progs[BLIT_PREMULTIPLY].dfbColor    = glGetUniformLocation( dev->progs[BLIT_PREMULTIPLY].obj, "dfbColor" );
-     dev->progs[BLIT_PREMULTIPLY].dfbScale    = glGetUniformLocation( dev->progs[BLIT_PREMULTIPLY].obj, "dfbScale" );
-     dev->progs[BLIT_PREMULTIPLY].dfbTexScale = glGetUniformLocation( dev->progs[BLIT_PREMULTIPLY].obj, "dfbTexScale" );
+     dev->progs[BLIT_PREMULTIPLY].obj          = prog_obj;
+     dev->progs[BLIT_PREMULTIPLY].name         = "blit_premultiply";
+     dev->progs[BLIT_PREMULTIPLY].dfbColor     = glGetUniformLocation( dev->progs[BLIT_PREMULTIPLY].obj, "dfbColor" );
+     dev->progs[BLIT_PREMULTIPLY].dfbScale     = glGetUniformLocation( dev->progs[BLIT_PREMULTIPLY].obj, "dfbScale" );
+     dev->progs[BLIT_PREMULTIPLY].dfbRotMatrix = glGetUniformLocation( dev->progs[BLIT_PREMULTIPLY].obj, "dfbRotMatrix" );
+     dev->progs[BLIT_PREMULTIPLY].dfbTexScale  = glGetUniformLocation( dev->progs[BLIT_PREMULTIPLY].obj, "dfbTexScale" );
 
      prog_obj = init_program( blit_mat_vert_src, blit_premultiply_frag_src, DFB_TRUE );
      if (!prog_obj) {

@@ -49,6 +49,7 @@ typedef enum {
 typedef struct {
      GLuint                obj;          /* the program object */
      GLint                 dfbScale;     /* location of scale factors for clipped coordinates */
+     GLint                 dfbRotMatrix; /* location of layer rotation matrix */
      GLint                 dfbROMatrix;  /* location of render options matrix */
      GLint                 dfbMVPMatrix; /* location of model-view-projection matrix */
      GLint                 dfbColor;     /* location of global RGBA color */
@@ -75,6 +76,8 @@ typedef enum {
 
 typedef struct {
      DFBSurfaceBlittingFlags blittingflags; /* blitting flags */
+     float                   aspect;        /* layer aspect scaling */
+     int                     rotation;      /* layer rotation */
 } GLES2DriverData;
 
 typedef struct {

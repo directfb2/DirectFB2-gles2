@@ -20,13 +20,15 @@
 static const char *draw_vert_src = "                                     \
 attribute vec2 dfbPos;                                                   \
 uniform   vec3 dfbScale;                                                 \
+uniform   mat3 dfbRotMatrix;                                             \
                                                                          \
 void main(void)                                                          \
 {                                                                        \
-     gl_Position.x = dfbScale.x * dfbPos.x - 1.0;                        \
-     gl_Position.y = dfbScale.y * dfbPos.y + dfbScale.z;                 \
-     gl_Position.z = 0.0;                                                \
-     gl_Position.w = 1.0;                                                \
+     vec3 pos;                                                           \
+     pos.x = dfbScale.x * dfbPos.x - 1.0;                                \
+     pos.y = dfbScale.y * dfbPos.y + dfbScale.z;                         \
+     pos.z = 0.0;                                                        \
+     gl_Position = vec4(dfbRotMatrix * pos, 1.0);                        \
 }";
 
 /* Transform input 2D positions "dfbPos" by the render options matrix before transforming to GLES clip coordinates. */
@@ -37,8 +39,8 @@ uniform   mat3 dfbROMatrix;                                              \
                                                                          \
 void main(void)                                                          \
 {                                                                        \
-     vec3 pos = dfbMVPMatrix * dfbROMatrix * vec3(dfbPos, 1.0);          \
-     gl_Position = vec4(pos.x, pos.y, 0.0, pos.z);                       \
+     vec3 pos = dfbMVPMatrix * dfbROMatrix * vec3(dfbPos, 0.0);          \
+     gl_Position = vec4(pos.x, pos.y, 0.0, 1.0);                         \
 }";
 
 /* Draw fragment in a constant color. */
@@ -57,15 +59,17 @@ static const char *blit_vert_src = "                                     \
 attribute vec2 dfbPos;                                                   \
 attribute vec2 dfbUV;                                                    \
 uniform   vec3 dfbScale;                                                 \
+uniform   mat3 dfbRotMatrix;                                             \
 uniform   vec2 dfbTexScale;                                              \
 varying   vec2 varTexCoord;                                              \
                                                                          \
 void main(void)                                                          \
 {                                                                        \
-     gl_Position.x = dfbScale.x * dfbPos.x - 1.0;                        \
-     gl_Position.y = dfbScale.y * dfbPos.y + dfbScale.z;                 \
-     gl_Position.z = 0.0;                                                \
-     gl_Position.w = 1.0;                                                \
+     vec3 pos;                                                           \
+     pos.x = dfbScale.x * dfbPos.x - 1.0;                                \
+     pos.y = dfbScale.y * dfbPos.y + dfbScale.z;                         \
+     pos.z = 0.0;                                                        \
+     gl_Position = vec4(dfbRotMatrix * pos, 1.0);                        \
      varTexCoord.s = dfbTexScale.x * dfbUV.x;                            \
      varTexCoord.t = dfbTexScale.y * dfbUV.y;                            \
 }";
@@ -81,8 +85,8 @@ varying   vec2 varTexCoord;                                              \
                                                                          \
 void main(void)                                                          \
 {                                                                        \
-     vec3 pos = dfbMVPMatrix * dfbROMatrix * vec3(dfbPos, 1.0);          \
-     gl_Position = vec4(pos.x, pos.y, 0.0, pos.z);                       \
+     vec3 pos = dfbMVPMatrix * dfbROMatrix * vec3(dfbPos, 0.0);          \
+     gl_Position = vec4(pos.x, pos.y, 0.0, 1.0);                         \
      varTexCoord.s = dfbTexScale.x * dfbUV.x;                            \
      varTexCoord.t = dfbTexScale.y * dfbUV.y;                            \
 }";

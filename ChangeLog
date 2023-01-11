@@ -1,3 +1,24 @@
+commit 3ecb795f89178611fdb45fb1691ae6e0e54551f2
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Wed Jan 11 00:58:53 2023 +0100
+
+    Add support for layer rotation
+
+commit 0f8eb34ba297e9cb6e4aecc1dbdab13f5ee6d400
+Merge: fe03aa2 ec50cf0
+Author: DirectFB2 <80045286+directfb2@users.noreply.github.com>
+Date:   Fri Jan 6 22:12:36 2023 +0100
+
+    Merge pull request #3 from caramelli/master
+    
+    Add hardware acceleration support for 90 and 270 degree rotations
+
+commit ec50cf0196fa463acecb247228dc6fd21393b3ff
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Fri Jan 6 22:11:25 2023 +0100
+
+    Update ChangeLog
+
 commit 6ac7bf903d9620f766b6af30892ec83974e23c5c
 Author: Nicolas Caramelli <caramelli.devel@gmail.com>
 Date:   Fri Jan 6 22:11:20 2023 +0100
