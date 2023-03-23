@@ -23,6 +23,8 @@ moduledir = directfb_dep.get_pkgconfig_variable('moduledir')
 
 gles2_dep = dependency('glesv2')
 
+pkgconfig = import('pkgconfig')
+
 gles2_sources = [
   'gles2_2d.c',
   'gles2_gfxdriver.c'
@@ -33,3 +35,15 @@ library('directfb_gles2',
         dependencies: [directfb_dep, gles2_dep],
         install: true,
         install_dir: join_paths(moduledir, 'gfxdrivers'))
+
+pkgconfig.generate(filebase: 'directfb-gfxdriver-gles2',
+                   variables: 'moduledir=' + moduledir,
+                   name: 'DirectFB-gfxdriver-gles2',
+                   description: 'OpenGL ES 2.0 GFX driver',
+                   requires_private: 'glesv2',
+                   libraries_private: ['-L${moduledir}/gfxdrivers',
+                                       '-Wl,--whole-archive -ldirectfb_gles2 -Wl,--no-whole-archive'])
+
+if get_option('default_library') != 'shared'
+  meson.add_install_script('dfb-update-pkgconfig', skip_if_destdir: true)
+endif
