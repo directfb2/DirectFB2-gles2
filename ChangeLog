@@ -1,3 +1,24 @@
+commit be3c653d6e566310a4169101bc10f571003327bc
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Thu Mar 23 17:17:27 2023 +0100
+
+    Add pkg-config file (for static build)
+
+commit 209b43eaa71db59e9d0a671ec133b34d435e3487
+Merge: 0f8eb34 bfe5599
+Author: DirectFB2 <80045286+directfb2@users.noreply.github.com>
+Date:   Wed Jan 11 01:01:56 2023 +0100
+
+    Merge pull request #4 from caramelli/master
+    
+    Add support for layer rotation
+
+commit bfe55996872e782a099087af55fb13dcfcb35258
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Wed Jan 11 00:59:08 2023 +0100
+
+    Update ChangeLog
+
 commit 3ecb795f89178611fdb45fb1691ae6e0e54551f2
 Author: Nicolas Caramelli <caramelli.devel@gmail.com>
 Date:   Wed Jan 11 00:58:53 2023 +0100
