@@ -1,3 +1,24 @@
+commit 72d55e0155abd60d78767bf10fb01132d961736a
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Sun Mar 26 08:42:55 2023 +0200
+
+    Check GL_RENDERER string in driver_probe()
+
+commit 64e273aef5a45023cb56cd41080c09d242dd67eb
+Merge: 209b43e 0033ae3
+Author: DirectFB2 <80045286+directfb2@users.noreply.github.com>
+Date:   Thu Mar 23 17:20:30 2023 +0100
+
+    Merge pull request #5 from caramelli/master
+    
+    Add pkg-config file (for static build)
+
+commit 0033ae3f5531ed1f0d9bf6803f36c93607d1fd43
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Thu Mar 23 17:17:35 2023 +0100
+
+    Update ChangeLog
+
 commit be3c653d6e566310a4169101bc10f571003327bc
 Author: Nicolas Caramelli <caramelli.devel@gmail.com>
 Date:   Thu Mar 23 17:17:27 2023 +0100
