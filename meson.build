@@ -19,7 +19,7 @@ project('DirectFB2-gles2', 'c',
 
 directfb_dep = dependency('directfb-internal')
 
-moduledir = directfb_dep.get_pkgconfig_variable('moduledir')
+moduledir = directfb_dep.get_variable(pkgconfig: 'moduledir')
 
 gles2_dep = dependency('glesv2')
 

@@ -140,7 +140,7 @@ init_program( const char *vert_prog_src,
 static int
 driver_probe()
 {
-     return 1;
+     return glGetString( GL_RENDERER ) ? 1 : 0;
 }
 
 static void
