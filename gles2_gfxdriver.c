@@ -140,7 +140,7 @@ init_program( const char *vert_prog_src,
 static int
 driver_probe()
 {
-     return glGetString( GL_RENDERER ) ? 1 : 0;
+     return dfb_gfxcard_get_accelerator() > 0x10000 ? 1 : 0;
 }
 
 static void
