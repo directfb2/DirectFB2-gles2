@@ -1,3 +1,24 @@
+commit 4387954684b3e47387be94727f04eb9ac4905530
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Sun Jun 22 21:17:33 2025 +0200
+
+    Use dfb_gfxcard_get_accelerator() in driver_probe()
+
+commit ec9460361b054a9b0a52f6b20cd582ff0e6f31f9
+Merge: 64e273a f8b0a8a
+Author: DirectFB2 <80045286+directfb2@users.noreply.github.com>
+Date:   Sun Mar 26 08:43:08 2023 +0200
+
+    Merge pull request #6 from caramelli/master
+    
+    Check GL_RENDERER string in driver_probe()
+
+commit f8b0a8affb11ae2b97a99dc302d70256865ef183
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Sun Mar 26 08:43:09 2023 +0200
+
+    Update ChangeLog
+
 commit 72d55e0155abd60d78767bf10fb01132d961736a
 Author: Nicolas Caramelli <caramelli.devel@gmail.com>
 Date:   Sun Mar 26 08:42:55 2023 +0200
